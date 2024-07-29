@@ -17,3 +17,12 @@
 .float-right {
     float: right;
 }
+
+.navbar-custom {
+    background-color: #e33a50;
+    color: white;
+}
+
+.navbar-custom a {
+    color: white;
+}

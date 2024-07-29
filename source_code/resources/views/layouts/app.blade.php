@@ -16,15 +16,19 @@
     {{-- App CSS --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    {{-- Font Awesome 6.6.0 --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-custom">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Pipe SMS
+                    <i class="fa-solid fa-tower-cell"></i>
+                    &nbsp;&nbsp;Pipe SMS
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -42,7 +46,9 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">System Login</a>
+                                    <a class="nav-link" href="{{ route('login') }}">
+                                        <i class="fa-regular fa-user"></i>
+                                        &nbsp;System Login</a>
                                 </li>
                             @endif
                             
