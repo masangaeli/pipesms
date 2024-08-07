@@ -173,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("deviceId", smartphoneId);
+                params.put("smartPhoneId", smartphoneId);
                 params.put("username", username);
                 params.put("password", password);
                 return params;

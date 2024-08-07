@@ -18,9 +18,11 @@ class QueueMessageController extends Controller
     //messagesPage
     public function messagesPage() {
 
-        $total_messages = QueueMessage::where('user_id', Auth::User()->id)->count();
+        $total_messages = QueueMessage::where('user_id', Auth::User()->id)
+                    ->count();
 
-        $groups = Group::where('user_id', Auth::User()->id)->get();
+        $groups = Group::where('user_id', Auth::User()->id)
+                    ->get();
 
         $messages = QueueMessage::where('user_id', Auth::User()->id)
                 ->orderBy('created_at', 'desc')->paginate(24);

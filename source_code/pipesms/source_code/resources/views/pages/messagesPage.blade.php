@@ -39,8 +39,8 @@
                             <td>{{ $id += 1 }}</td>
                             <td>{{ @$message->contact->first_name }} {{ @$message->contact->last_name }}</td>
                             <td>{{ $message->message_data }}</td>
-                            <td>{{ $message->sent_status == "0" ? "Sent" : "Not Sent" }}</td>
-                            <td>{{ $message->dlr_report == "0" ? "Delivered" : "Not Delivered" }}</td>
+                            <td>{{ $message->sent_status == "1" ? "Sent" : "Not Sent" }}</td>
+                            <td>{{ $message->dlr_report == "1" ? "Delivered" : "Not Delivered" }}</td>
                         </tr>
                         @endforeach
                     </tbody>

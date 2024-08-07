@@ -16,9 +16,14 @@ class ContactController extends Controller
     public function contactsPage(Request $request)
     {
         //Get Contacts List
-        $total_contacts = Contact::where('user_id', Auth::User()->id)->count();
-        $groups = Group::where('user_id', Auth::User()->id)->get();
-        $contactsList = Contact::orderBy('created_at', 'desc')->paginate(24);
+        $total_contacts = Contact::where('user_id', Auth::User()->id)
+                    ->count();
+                    
+        $groups = Group::where('user_id', Auth::User()->id)
+                    ->get();
+
+        $contactsList = Contact::where('user_id', Auth::User()->id)
+                    ->orderBy('created_at', 'desc')->paginate(24);
 
         return view('pages.contactsPage',
         [

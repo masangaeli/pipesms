@@ -118,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject smsObject = jsonArray.getJSONObject(i);
 
                                 String smsId = smsObject.getString("id");
-                                String phoneNumber = smsObject.getString("phoneNumber");
-                                String messageContent = smsObject.getString("messageContent");
+                                String phoneNumber = smsObject.getString("to_phone_number");
+                                String messageContent = smsObject.getString("message_data");
 
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         //Restart Activity
 
-        restartActivity();
+        // restartActivity();
     }
 
     @Override
@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         //Restart Activity
 
-        restartActivity();
+        // restartActivity();
     }
 
     public void restartActivity() {

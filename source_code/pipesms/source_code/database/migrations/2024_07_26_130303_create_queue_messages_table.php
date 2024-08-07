@@ -18,6 +18,10 @@ return new class extends Migration
             $table->integer('group_id')->nullable();
             $table->string('to_phone_number');
             $table->longText('message_data');
+
+            $table->integer('sent_status')->default(0);
+            $table->integer('dlr_report')->default(0);
+            
             $table->timestamps();
         });
     }
