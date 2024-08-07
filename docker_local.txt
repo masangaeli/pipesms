@@ -1,0 +1,10 @@
+Pipe SMS Container
+============================================
+
+docker run -it -d \
+  --name pipesms \
+  --network web \
+  -p 8080:80 \
+  -v ./source_code:/var/www/html \
+   emasanga/pipesms:latest
+

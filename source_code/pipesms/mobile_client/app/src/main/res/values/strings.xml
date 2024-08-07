@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Pipe SMS</string>
+
+    <string name="login">Login</string>
+
+    <string name="serverUrl">Server Url Eg https://abc.com</string>
+
+    <string name="clear_sms_success">Clearing SMS Success</string>
+
+    <string name="clearing_sms_failure">Clearing SMS Failure</string>
+
+    <string name="network_error">Network Error Occurred</string>
+
+    <string name="verifying_credentials">Verifying Credentials</string>
+
+    <string name="correct_credentials">Authenticated Successfully…</string>
+
+    <string name="invalid_login">Invalid Login Credentials</string>
+
+    <string name="loginError">Login Error Occurred</string>
+
+    <string name="password">Pipe SMS Password</string>
+
+    <string name="username">Pipe SMS Username</string>
+
+    <string name="smart_phone_id">Device Id Eg 1</string>
+
+    <string name="fillInputsError">Please Fill All The Fields</string>
+
+    <string name="powered_by">Powered By Aifrruis Labs</string>
+
+</resources>
