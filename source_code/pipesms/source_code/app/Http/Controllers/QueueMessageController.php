@@ -56,7 +56,7 @@ class QueueMessageController extends Controller
         $new_message->dlr_report = 0;
         $new_message->save();
 
-        return redirect()->route('contacts.index')
+        return redirect()->route('messages.index')
                 ->with('success', 'Single Message Created Successfully.');
     }
 
