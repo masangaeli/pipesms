@@ -16,9 +16,9 @@ class GroupController extends Controller
     {
         $total_groups = Group::where('user_id', Auth::User()->id)
                     ->get()->count();
-                    
+
         $groupsList = Group::where('user_id', Auth::User()->id)
-                        ->orHavingNullorderBy('created_at', 'desc')->paginate(24);
+                        ->orderBy('created_at', 'desc')->paginate(24);
 
         return view('pages.groupsPage', [
             'groups' => $groupsList,
