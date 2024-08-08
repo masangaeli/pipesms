@@ -11,6 +11,37 @@ use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
+    //pullUserGroups
+    public function pullUserGroups(Request $request)
+    {
+        //Input Validation
+        $this->validate($request,
+            [
+                'user_id' => 'required',
+                'contact_id' => 'required'
+            ]);
+
+        //Pull User Groups
+        $userGroups = Group::where('user_id', $request->user_id)->get();
+
+        $groups_ret_list = array();
+
+        foreach ($userGroups as $group) {
+            //Check Groups Where User is in
+            $group_contact_check = GroupContact::where([
+                ['contact_id', '=', $request->contact_id],
+                ['group_id', '=', $group->id],
+            ])->get();
+
+            if (sizeof($group_contact_check) == 0) {
+                $groups_ret_list[] = Group::find($group->id);
+            }
+
+        }
+
+        return response()->json(array('groupsList' => $groups_ret_list), 200);
+    }
+
     //groupsPage
     public function groupsPage(Request $request)
     {

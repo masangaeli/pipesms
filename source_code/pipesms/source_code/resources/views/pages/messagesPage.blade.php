@@ -110,7 +110,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form action="{{ route('messages.new_single') }}" method="POST">
+            <form action="{{ route('messages.new_multiple') }}" method="POST">
                 @csrf
         
                 <div>

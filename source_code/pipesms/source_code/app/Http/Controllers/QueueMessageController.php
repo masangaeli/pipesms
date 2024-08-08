@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\QueueMessage;
 use App\Models\Contact;
 use App\Models\Group;
+use App\Models\GroupContact;
 
 use Carbon\Carbon;
 use App\Models\SMSAPIKey;
@@ -37,6 +38,16 @@ class QueueMessageController extends Controller
         ]);
     }
 
+    private function message_templating($contact_id, $message_content) {
+        $contact_data = Contact::find($contact_id);
+
+        $message_content = str_replace("_first_name", $contact_data->first_name, $message_content);
+        $message_content = str_replace("_last_name", $contact_data->last_name, $message_content);
+        $message_content = str_replace("_phone_number", $contact_data->phone_number, $message_content);
+    
+        return $message_content;
+    }
+
     //messagesNewSingle
     public function messagesNewSingle(Request $request)
     {
@@ -51,7 +62,7 @@ class QueueMessageController extends Controller
         $new_message->user_id = Auth::User()->id;
         $new_message->contact_id = $request->contact_id;
         $new_message->to_phone_number = $contact->phone_number;
-        $new_message->message_data = $request->message_content;
+        $new_message->message_data = $this->message_templating($request->contact_id, $request->message_content);
         $new_message->sent_status = 0;
         $new_message->dlr_report = 0;
         $new_message->save();
@@ -64,9 +75,34 @@ class QueueMessageController extends Controller
     public function messagesNewMultiple(Request $request)
     {
         $request->validate([
-            'group_id' => 'nullable',
-            'message_content' => 'nullable'
+            'group_id' => 'required',
+            'message_content' => 'required'
         ]);
+
+        $contacts_in_group = GroupContact::where('group_id', $request->group_id)
+                            ->get();
+
+        foreach($contacts_in_group as $contactA) {
+
+            $contact = Contact::where('id', $contactA->contact_id)->get()->toArray();
+            
+            if ($contact != null) {
+                
+                $new_message = new QueueMessage();
+                $new_message->user_id = Auth::User()->id;
+                $new_message->contact_id = $contact['0']['id'];
+                $new_message->to_phone_number = $contact['0']['phone_number'];
+                $new_message->group_id = $request->group_id;
+                $new_message->message_data = $this->message_templating($contact['0']['id'], $request->message_content);
+                $new_message->sent_status = 0;
+                $new_message->dlr_report = 0;
+                $new_message->save();
+            }
+
+        }
+
+        return redirect()->route('messages.index')
+                ->with('success', 'Multiple Messages Created Successfully.');
 
     }
 

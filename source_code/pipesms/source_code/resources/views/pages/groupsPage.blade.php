@@ -38,6 +38,7 @@
                             <td>{{ $group->group_info }}</td>
                             <td>
                                 <button class="btn btn-primary form-control"
+                                onclick="show_group_contacts('{{ $group->id }}')"
                                 data-bs-toggle="modal" data-bs-target="#groupContactsModal"
                                 >Group Contacts</button>
                             </td>
@@ -97,7 +98,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="groups_Contacts_list">
 
             </tbody>
           </table>
@@ -194,6 +195,45 @@
 
 
   <script type="text/javascript">
+
+    function show_group_contacts(group_id) {
+      $.get("/api/v1/group/contacts/list?group_id=" + group_id, function(data) {
+
+        var jsonData = JSON.parse(JSON.stringify(data));
+
+        var contacts = jsonData["group_contacts"]
+
+        $("#groups_Contacts_list").html("");
+
+        var id = 1;
+        contacts.forEach(function(contact) {
+          $("#groups_Contacts_list").append(`
+          
+          <tr>
+                <td>`+id+`</td>
+                <td>`+contact.first_name+`</td>
+                <td>`+contact.last_name+`</td>
+                <td>`+contact.phone_number+`</td>
+                <td>
+                    <form action="{{ route('groupcontacts.destroy') }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="contact_id" value="`+contact.id+`">
+                        <input type="hidden" name="group_id" value="`+group_id+`">
+                        <button class="btn btn-danger form-control" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+
+          `);
+
+          id += 0;
+        })
+
+      })
+      
+
+    }
 
     function showEditModal(groupId, groupTitle, groupInfo)
     {

@@ -41,7 +41,9 @@
                             <td>
                                 <div class="row container">      
                                     <div class="col-md-4">
-                                        <button class="btn btn-primary form-control">Add to Group</button>
+                                        <button class="btn btn-primary form-control"
+                                        onclick="set_contact_data('{{ $contact->id }}')"
+                                        data-bs-toggle="modal" data-bs-target="#addToGroupModal">Add to Group</button>
                                     </div>  
                                     <div class="col-md-4">
                                         <button class="btn btn-success form-control" 
@@ -133,5 +135,93 @@
       </div>
     </div>
   </div>
+
+
+
+   <!-- Add Contact to Group Modal -->
+   <div class="modal fade" id="addToGroupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Contact to Group</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Group Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="add_contact_to_group">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+var add_to_group_contact_id = "";
+
+function set_contact_data(contact_id) {
+    add_to_group_contact_id = contact_id
+
+    //Pull This User Groups List to Modal
+    $.get("/api/v1/pull/user/groups?user_id={{ Auth::User()->id }}&contact_id="+contact_id, function (data) {
+        var jsonData = JSON.parse(JSON.stringify(data));
+
+        var groupsList = jsonData["groupsList"];
+
+        $("#add_contact_to_group").html("");
+
+        var id = 1;
+        groupsList.forEach(function(group) {
+
+            $('#add_contact_to_group').append(`
+            
+            <tr id='add_to_group_row_`+id+`'>
+                <th>`+id+`</th>
+                <th>`+group.group_title+`</th>
+                <th>
+                    <button class="btn btn-primary form-control"
+                    onclick="add_contact_data_to_group('`+group.id+`', '`+contact_id+`', 'add_to_group_row_`+id+`')">
+                        Add Contact
+                    </button>
+                </th>
+            </tr>
+
+            `);
+
+            id += 1;
+        })
+    })
+}
+
+
+function add_contact_data_to_group(group_id, contact_id, data_id) {
+    $.get('/api/v1/add/contact/to/group?user_id={{Auth::User()->id}}&group_id='+group_id+'&contact_id='+contact_id, function(data) {
+
+        var jsonData = JSON.parse(JSON.stringify(data));
+        
+        if (jsonData['status'] == true) {
+            
+            $("#"+data_id).hide();
+        }
+
+    })
+    
+}
+
+</script>
 
 @endsection

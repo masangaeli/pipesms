@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GroupContactController;
 use App\Http\Controllers\QueueMessageController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GroupController;
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 //Authenticated Routes
 Route::middleware(['auth'])->group(function () {
 
+    //Destroy Group Contact
+    Route::delete('/groupcontacts/destroy', [GroupContactController::class, 'groupContactDestroy'])
+        ->name('groupcontacts.destroy');
+    
     //Groups
     Route::get('/groups', [GroupController::class, 'groupsPage'])
         ->name('groups.index');
