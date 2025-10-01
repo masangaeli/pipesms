@@ -2,7 +2,10 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-![Pipe SMS](Pics/pipesms_logo.webp)
+<p align="center">
+  <img src="Pics/pipesms_logo.webp" alt="Pipe SMS" width="100" height="100">
+</p>
+
 
 ## Overview
 
